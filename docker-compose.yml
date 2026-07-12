@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - s-network
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: springboot-learn
+      POSTGRES_USER: admin_support_sync_user
+      POSTGRES_PASSWORD: akrem123
+    ports:
+      - "5432:5432"
+    networks:
+      - s-network
+
+networks:
+  s-network:
+    driver: bridge

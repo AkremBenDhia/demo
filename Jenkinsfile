@@ -1,14 +1,12 @@
 pipeline {
     agent any
 
-    stages {
+    tools {
+        maven 'Maven'
+        jdk 'JDK21'
+    }
 
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/AkremBenDhia/demo.git'
-            }
-        }
+    stages {
 
         stage('Build Spring Boot') {
             steps {

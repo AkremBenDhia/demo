@@ -1,16 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven'
-        jdk 'JDK21'
-    }
-
-    environment {
-        IMAGE_NAME = 'demo-springboot'
-        CONTAINER_NAME = 'demo-container'
-    }
-
     stages {
 
         stage('Checkout') {
@@ -20,46 +10,22 @@ pipeline {
             }
         }
 
-        stage('Build with Maven') {
+        stage('Build Spring Boot') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Docker Build') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                bat 'docker build -t demo-springboot .'
             }
         }
 
-        stage('Stop Old Container') {
+        stage('Docker Compose') {
             steps {
-                sh '''
-                docker stop $CONTAINER_NAME || true
-                docker rm $CONTAINER_NAME || true
-                '''
+                bat 'docker compose up -d'
             }
-        }
-
-        stage('Run Docker Container') {
-            steps {
-                sh '''
-                docker run -d \
-                --name $CONTAINER_NAME \
-                -p 8080:8080 \
-                $IMAGE_NAME
-                '''
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Deployment successful!'
-        }
-
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }

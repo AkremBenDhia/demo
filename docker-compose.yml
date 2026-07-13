@@ -5,10 +5,6 @@ services:
       - "8082:8080"
     depends_on:
       - postgres
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/springboot-learn
-      SPRING_DATASOURCE_USERNAME: admin_support_sync_user
-      SPRING_DATASOURCE_PASSWORD: akrem123
     networks:
       - s-network
 

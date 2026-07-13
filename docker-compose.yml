@@ -1,10 +1,14 @@
 services:
   app:
-    build: .
+    image: demo-springboot
     ports:
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
       - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/springboot-learn
+      SPRING_DATASOURCE_USERNAME: admin_support_sync_user
+      SPRING_DATASOURCE_PASSWORD: akrem123
     networks:
       - s-network
 
@@ -14,8 +18,6 @@ services:
       POSTGRES_DB: springboot-learn
       POSTGRES_USER: admin_support_sync_user
       POSTGRES_PASSWORD: akrem123
-    ports:
-      - "5432:5432"
     networks:
       - s-network
 
